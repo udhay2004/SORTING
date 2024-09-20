@@ -1,0 +1,50 @@
+void ans(vector < int > & arr,int s,int e){
+    int mid=(s+e)/2;
+    int len1=mid-s+1;
+    int len2=e-mid;
+
+    int *one=new int[len1];
+    int *two=new int[len2];
+
+    int k=s;
+    for(int i=0;i<len1;i++){
+        one[i]=arr[k++];
+    }
+    int v=mid+1;
+    for(int i=0;i<len2;i++){
+        two[i]=arr[v++];
+    }
+    int index1=0;
+    int index2=0;
+    int mainindex=s;
+
+    while(index1<len1 && index2<len2){
+        if(one[index1]<two[index2]){
+            arr[mainindex++]=one[index1++];
+        }
+        else{
+            arr[mainindex++]=two[index2++];
+        }
+    }
+    while(index1<len1){
+        arr[mainindex++]=one[index1++];
+    }
+    while(index2<len2){
+        arr[mainindex++]=two[index2++];
+    }
+
+}
+
+void merge(vector < int > & arr,int s ,int e){
+    if(s>=e){
+        return;
+    }
+    int mid=(s+e)/2;
+    merge(arr,s,mid);
+    merge(arr,mid+1,e);
+    ans(arr,s,e);
+}
+
+void mergeSort(vector < int > & arr, int n) {
+    merge(arr,0,n-1);
+}
